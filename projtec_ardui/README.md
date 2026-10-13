@@ -9,6 +9,12 @@ This project was generated with a template including simple application launcher
 - `core`: Main module with the application logic shared by all platforms.
 - `lwjgl3`: Primary desktop platform using LWJGL3; was called 'desktop' in older docs.
 
+## ESP32
+
+O jogo consulta `GET /api/dados` a cada 100 ms e usa `angX` e `angY` para mover o jogador. O botao **Calibrar Sensor** chama `GET /api/calibrar` e acompanha `GET /api/progresso` a cada 100 ms; falhas de leitura sao exibidas na tela e as consultas de progresso tentam novamente automaticamente.
+
+Por padrao, o cliente usa `http://192.168.4.1`. Para informar outro endereco, inicie o jogo com a propriedade JVM `-Dmpu.baseUrl=http://ENDERECO_DO_ESP32`.
+
 ## Gradle
 
 This project uses [Gradle](https://gradle.org/) to manage dependencies.
@@ -16,7 +22,7 @@ The Gradle wrapper was included, so you can run Gradle tasks using `gradlew.bat`
 Useful Gradle tasks and flags:
 
 - `--continue`: when using this flag, errors will not stop the tasks from running.
-- `--daemon`: when using this flag, Gradle daemon will be used to run chosen tasks.
+- `--daemon`: thanks to this flag, Gradle daemon will be used to run chosen tasks.
 - `--offline`: when using this flag, cached dependency archives will be used.
 - `--refresh-dependencies`: this flag forces validation of all dependencies. Useful for snapshot versions.
 - `build`: builds sources and archives of every project.
@@ -24,25 +30,13 @@ Useful Gradle tasks and flags:
 - `cleanIdea`: removes IntelliJ project data.
 - `clean`: removes `build` folders, which store compiled classes and built archives.
 - `eclipse`: generates Eclipse project data.
-- `idea`: generates IDEA project data.
+- `idea`: generates IntelliJ project data.
 - `lwjgl3:jar`: builds application's runnable jar, which can be found at `lwjgl3/build/libs`.
 - `lwjgl3:run`: starts the application.
 - `test`: runs unit tests (if any).
 
-Note that most tasks that are not specific to a project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
-For example, `core:clean` removes `build` folder only for the core project.
-
-## Sensor MPU6050 via ESP32
-
-O cliente consulta `GET /api/dados` a cada 100 ms em uma thread de fundo. O marcador no menu acompanha `angX` e `angY`; o botao "Calibrar sensor" chama `/api/calibrar` e acompanha `/api/progresso` sem bloquear a renderizacao.
-
-Por padrao, a aplicacao usa `http://192.168.4.1`. Para informar o endereco do ESP32, configure a variavel de ambiente ao iniciar o jogo:
-
-```bash
-MPU_BASE_URL=http://192.168.1.50 ./gradlew lwjgl3:run
-```
-
-Substitua o IP pelo endereco alcancavel na rede local.
+Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
+For example, `core:clean` removes `build` folder only from the `core` project.
 
 ## 📊 Acompanhamento do Projeto
 
